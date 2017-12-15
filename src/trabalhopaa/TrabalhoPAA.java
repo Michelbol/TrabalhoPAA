@@ -22,7 +22,8 @@ public class TrabalhoPAA {
         int x[] = null;
         int y[] = null;
         
-        System.out.println("Veitor: " + Lcs_Length(x,y));
+        System.out.println("Vetor: " + Lcs_Length(x,y));
+        System.out.println("Alo!");
     }
     
     public static ArrayList Lcs_Length(int x[], int y[]){
