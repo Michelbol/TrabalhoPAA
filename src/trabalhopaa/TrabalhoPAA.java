@@ -4,8 +4,8 @@ public class TrabalhoPAA {
 
     public static void main(String[] args) {
         //Arranjos de entrada x e y
-        int x[] = {1,2,3};
-        int y[] = {1,2,3};
+        int x[] = {1,2,3,4,5,6,7,8,9,10};
+        int y[] = {11,12,13,4,5,6,7,8,9,10};
         
         System.out.println("Subsequencia comum mais longa: ");
         Lcs_Length(x, y);        
@@ -17,8 +17,8 @@ public class TrabalhoPAA {
         int n = y.length;
         
         //Matrizes b e c
-        TabelaRelacional [][]c = new TabelaRelacional[m][n];
-        TabelaRelacional [][]b = new TabelaRelacional[m][n];
+        TabelaRelacional c[][] = new TabelaRelacional[m][n];
+        TabelaRelacional b[][] = new TabelaRelacional[m][n];
         
         int i, j;
         
@@ -34,11 +34,11 @@ public class TrabalhoPAA {
         for(i=1; i<m; i++){
             c[i][0].setValor(0);
         }
-        for(j=1; j<n; j++){
+        for(j=0; j<n; j++){
             c[0][j].setValor(0);
         }
         for(i=1; i<m; i++){
-            for(j=0; j<n; j++){
+            for(j=1; j<n; j++){
                 if(x[i] == y[j]){
                     c[i][j].setValor((c[i-1][j-1].getValor()+1));
                     b[i][j].setPosicao(Posicao.DIAGONAL);
@@ -53,19 +53,20 @@ public class TrabalhoPAA {
         }
         
         //Printa atravez do caminho criado a subsequencia
-        Print_Lcs(b, x, m-1, n-1);        
-
-        return;
+        Print_Lcs(b, x, m-1, n-1);
     }
     
     
     public static void Print_Lcs(TabelaRelacional b[][], int x[], int i, int j){
         //Caso base
-        if((i==0) || (j==0)) return;
+        if((i==0) || (j==0)){
+            //System.out.println(x[i]);
+            return;
+        }
         
         if(b[i][j].getPosicao() == Posicao.DIAGONAL){
             Print_Lcs(b, x, i-1, j-1);
-            System.out.println(x[i]); //Não sei se está correto o print
+            System.out.println(x[i]);
         }
         else if(b[i][j].getPosicao() == Posicao.CIMA){
             Print_Lcs(b, x, i-1, j);
