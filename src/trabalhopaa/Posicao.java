@@ -10,5 +10,5 @@ package trabalhopaa;
  * @author miche
  */
 public enum Posicao {
-    Diagonal,Esquerda,Cima;
+    DIAGONAL,ESQUERDA,CIMA;
 }

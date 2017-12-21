@@ -1,60 +1,78 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trabalhopaa;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- *
- * @author miche
- */
 public class TrabalhoPAA {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        int x[] = null;
-        int y[] = null;
+        //Arranjos de entrada x e y
+        int x[] = {1,2,3};
+        int y[] = {1,2,3};
         
-        System.out.println("Vetor: " + Lcs_Length(x,y));
-        System.out.println("Alo!");
+        System.out.println("Subsequencia comum mais longa: ");
+        Lcs_Length(x, y);        
     }
     
-    public static ArrayList Lcs_Length(int x[], int y[]){
-        ArrayList retorno = new ArrayList();
+    public static void Lcs_Length(int x[], int y[]){
+        //Tamanho dos arranjos
         int m = x.length;
         int n = y.length;
-        TabelaRelacional c[][] = new TabelaRelacional[m][n];
-        TabelaRelacional b[][] = new TabelaRelacional[m][n];
-        for(int i = 1; i < m; i++){
-            c[i][0].setValor(12);
+        
+        //Matrizes b e c
+        TabelaRelacional [][]c = new TabelaRelacional[m][n];
+        TabelaRelacional [][]b = new TabelaRelacional[m][n];
+        
+        int i, j;
+        
+        //instancia os objetos na matriz
+        for(i=0; i<m; i++){
+            for(j=0; j<n; j++){
+                c[i][j] = new TabelaRelacional();
+                b[i][j] = new TabelaRelacional();
+            }
         }
-        for(int j = 1; j < n; j++){
-            c[0][j].setValor(0);;
+        
+        //cria o caminho para encontrar a subsequencia
+        for(i=1; i<m; i++){
+            c[i][0].setValor(0);
         }
-        for(int i = 1; i < m; i++){
-            for(int j = 1; j < n; j++){
+        for(j=1; j<n; j++){
+            c[0][j].setValor(0);
+        }
+        for(i=1; i<m; i++){
+            for(j=0; j<n; j++){
                 if(x[i] == y[j]){
                     c[i][j].setValor((c[i-1][j-1].getValor()+1));
-                    b[i][j].setPosicao(Posicao.Diagonal);
+                    b[i][j].setPosicao(Posicao.DIAGONAL);
                 }else if(c[i-1][j].getValor() >= c[i-1][j].getValor()){
                     c[i][j].setValor(c[i-1][j].getValor());
-                    b[i][j].setPosicao(Posicao.Cima);
+                    b[i][j].setPosicao(Posicao.CIMA);
                 }else{
                     c[i][j].setValor(c[i][j-1].getValor());
-                    b[i][j].setPosicao(Posicao.Esquerda);
+                    b[i][j].setPosicao(Posicao.ESQUERDA);
                 }
             }
         }
-        retorno.add(c);
-        retorno.add(b);
-        return retorno;
+        
+        //Printa atravez do caminho criado a subsequencia
+        Print_Lcs(b, x, m-1, n-1);        
+
+        return;
+    }
+    
+    
+    public static void Print_Lcs(TabelaRelacional b[][], int x[], int i, int j){
+        //Caso base
+        if((i==0) || (j==0)) return;
+        
+        if(b[i][j].getPosicao() == Posicao.DIAGONAL){
+            Print_Lcs(b, x, i-1, j-1);
+            System.out.println(x[i]); //Não sei se está correto o print
+        }
+        else if(b[i][j].getPosicao() == Posicao.CIMA){
+            Print_Lcs(b, x, i-1, j);
+        }
+        else{
+            Print_Lcs(b, x, i, j-1);
+        }
     }
     
 }
