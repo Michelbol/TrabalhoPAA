@@ -4,8 +4,8 @@ public class TrabalhoPAA {
 
     public static void main(String[] args) {
         //Arranjos de entrada x e y
-        int x[] = {1,2,3,4,5,6,7,8,9,10};
-        int y[] = {11,12,13,4,5,6,7,8,9,10};
+        int x[] = {0,1,2,3,4,5,6};
+        int y[] = {0,1,2,3,9,4,5,6};
         
         System.out.println("Subsequencia comum mais longa: ");
         Lcs_Length(x, y);        
@@ -26,6 +26,10 @@ public class TrabalhoPAA {
         for(i=0; i<m; i++){
             for(j=0; j<n; j++){
                 c[i][j] = new TabelaRelacional();
+            }
+        }
+        for(i=1; i<m; i++){
+            for(j=1; j<n; j++){
                 b[i][j] = new TabelaRelacional();
             }
         }
@@ -42,7 +46,7 @@ public class TrabalhoPAA {
                 if(x[i] == y[j]){
                     c[i][j].setValor((c[i-1][j-1].getValor()+1));
                     b[i][j].setPosicao(Posicao.DIAGONAL);
-                }else if(c[i-1][j].getValor() >= c[i-1][j].getValor()){
+                }else if(c[i-1][j].getValor() >= c[i][j-1].getValor()){
                     c[i][j].setValor(c[i-1][j].getValor());
                     b[i][j].setPosicao(Posicao.CIMA);
                 }else{
@@ -60,10 +64,10 @@ public class TrabalhoPAA {
     public static void Print_Lcs(TabelaRelacional b[][], int x[], int i, int j){
         //Caso base
         if((i==0) || (j==0)){
-            //System.out.println(x[i]);
+//            System.out.println(x[i]);
             return;
         }
-        
+       
         if(b[i][j].getPosicao() == Posicao.DIAGONAL){
             Print_Lcs(b, x, i-1, j-1);
             System.out.println(x[i]);
